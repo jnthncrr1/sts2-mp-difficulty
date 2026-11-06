@@ -1,0 +1,11 @@
+{
+  "id": "MpDifficulty",
+  "name": "Multiplayer Difficulty",
+  "author": "jcorreia",
+  "description": "Custom-run modifiers that make multiplayer fights harder. Every player in the lobby needs the same version.",
+  "version": "0.0.1",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": true,
+  "min_game_version": "0.111.0"
+}
