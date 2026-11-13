@@ -38,13 +38,19 @@ public class NightTerrorsPlus : ModifierModel, IModifierText
         if (!isMimicked)
         {
             int loss = Math.Min(MaxHpLoss, player.Creature.MaxHp - 1);
-            await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), player.Creature, loss, isFromCard: false);
+            await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), player.Creature, loss, cardSource: null);
         }
     }
 
-    public override IReadOnlyList<LocString> ModifyExtraRestSiteHealText(Player player, IReadOnlyList<LocString> currentExtraText)
+    public override IReadOnlyList<LocString> ModifyExtraRestSiteHealText(Player player, IReadOnlyList<LocString> currentExtraText) =>
+        WithMaxHpLossText(AdditionalRestSiteHealText, currentExtraText);
+
+    /// <summary>Mend heals a teammate, who then loses the Max HP through AfterRestSiteHeal.</summary>
+    public override IReadOnlyList<LocString> ModifyExtraRestSiteMendText(Player player, IReadOnlyList<LocString> currentExtraText) =>
+        WithMaxHpLossText(AdditionalRestSiteMendText, currentExtraText);
+
+    private static IReadOnlyList<LocString> WithMaxHpLossText(LocString? text, IReadOnlyList<LocString> currentExtraText)
     {
-        LocString? text = AdditionalRestSiteHealText;
         if (text == null) return currentExtraText;
         text.Add("MaxHpLoss", MaxHpLoss);
         return currentExtraText.Append(text).ToList();
@@ -66,7 +72,7 @@ public class TerminalPlus : ModifierModel, IModifierText
             var creature = player.Creature;
             if (creature == null || creature.CurrentHp > 1 || creature.MaxHp > 1)
             {
-                await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), player.Creature, 1m, isFromCard: false);
+                await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), player.Creature, 1m, cardSource: null);
             }
         }
     }

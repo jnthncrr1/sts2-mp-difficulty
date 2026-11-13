@@ -20,7 +20,9 @@ public static class ModifierTextMerger
             strings[modifier.Id.Entry + ".title"] = text.TitleText(modifiers);
             strings[modifier.Id.Entry + ".description"] = text.DescriptionText;
         }
-        strings[ModelDb.GetEntry(typeof(NightTerrorsPlus)) + ".additionalRestSiteHealText"] = "Lose [red]{MaxHpLoss}[/red] Max HP.";
+        string nightTerrorsPlus = ModelDb.GetEntry(typeof(NightTerrorsPlus));
+        strings[nightTerrorsPlus + ".additionalRestSiteHealText"] = "Lose [red]{MaxHpLoss}[/red] Max HP.";
+        strings[nightTerrorsPlus + ".additionalRestSiteMendText"] = "They lose [red]{MaxHpLoss}[/red] Max HP.";
         modifiers.MergeWith(strings);
     }
 
